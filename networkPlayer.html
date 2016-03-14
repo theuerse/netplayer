@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="res/vis/vis.min.css" rel="stylesheet" />
+    <link href="res/bootstrap/css/bootstrap.min.css", rel="stylesheet" />
+    <link href="networkPlayer.css", rel="stylesheet" />
+    <link href="res/jquery-ui/jquery-ui.min.css", rel="stylesheet" />
+		<link href="res/c3js/c3.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="res/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="res/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="networkPlayer.js"></script>
+    <script type="text/javascript" src="imageProvider.js"></script>
+    <script type="text/javascript" src="res/chartjs/Chart.js"></script>
+    <script type="text/javascript" src="res/vis/vis.min.js"></script>
+    <script type="text/javascript" src="res/spin.min.js"></script>
+		<script type="text/javascript" src="res/c3js/d3.v3.min.js"></script>
+		<script type="text/javascript" src="res/c3js/c3.js"></script>
+
+    <title>Network Layout</title>
+
+</head>
+<body>
+    <div id="javaScriptAlert"class="alert alert-danger" role="alert">
+		This Page needs JavaScript in order to work, please enable it.
+	</div>
+	<div  id="trafficBusyIndicator" class="alert alert-info" role="alert">
+		<p class="leftspaced">Garthering traffic-data ...</p>
+	</div>
+	<div  id="rtLogBusyIndicator" class="alert alert-info" role="alert">
+		<p class="leftspaced">Reading realtime-log ...</p>
+	</div>
+	<div id="legendContainer"></div>
+    <div id="graphContainer"></div>
+</body>
+</html>

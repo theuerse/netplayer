@@ -1,0 +1,1 @@
+Folders with recorded emulation-runs may be placed here.
