@@ -1,0 +1,11 @@
+AddCharset UTF-8 .html .css .php .txt .js .json
+
+<ifmodule mod_headers.c>
+ <filesmatch "\\.(json|log)$">
+ Header set Cache-Control "max-age=5, public"
+ </filesmatch>
+</ifmodule>
+
+<ifmodule mod_deflate.c>
+ AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</ifmodule>

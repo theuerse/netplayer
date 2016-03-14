@@ -9,5 +9,5 @@ rm $TARGET
 while read line   # read from stdin (needs file redirected into stdin)
 do
    echo "$line" >> $TARGET
-   sleep 1
+   sleep 2
 done < $1
