@@ -440,6 +440,13 @@ function drawLegend(network,options,numberOfNodes,servers,groups,bitrateBounds){
 	  });
 
 
+    // add a button responsible to create/ let download the topology-file of the current network
+    // or show a error-dialog if the network is not connected (there exist isolated nodes)
+    $('#legendList').append('<li class="list-group-item"><button id="startBtn">start playback</button></li>');
+    $('#startBtn').button().click(function(event){
+      showPlaybackStartDialog();
+    });
+
 	  // get params
 	   var seed = getUrlVar("seed");
 
@@ -1092,6 +1099,36 @@ function updateNodeRtLogView(id){
 
     // set zoom (zoom to specified domain)
     clientCharts[id].zoom([Math.max(lines.length-20,0), Math.max(lines.length,20)]);
+}
+
+
+//
+// Playback Methods
+//
+function showPlaybackStartDialog(){
+	$("#aLogic").selectmenu();
+	$("#fwStrategy").selectmenu();
+
+	$("#playbackStartDialog").dialog({
+		modal: true,
+		width: 400,
+		buttons: {
+			Start: function(){
+				console.log("Starting playback...");
+				$.post("utils/start.php",{aLogic: $("#aLogic").val(),
+          fwStrategy: $("#fwStrategy").val()}).done(function(data){
+					if(data !== ""){
+            console.log("encountered error(s):");
+						console.log(data);
+          }
+				});
+				$(this).dialog("close");
+			},
+			Cancel: function(){
+				$(this).dialog("close");
+			}
+		}
+	});
 }
 
 

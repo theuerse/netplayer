@@ -65,3 +65,16 @@ meter {
 	margin-right: 5px;
 	width: 60%;
 }
+
+#aLogicLabel, #fwStrategyLabel {
+	display: block;
+}
+
+div.ui-selectmenu-open, #fwStrategy-menu, #aLogic-menu {
+    position: absolute;
+    z-index: 65535;
+}
+
+#aLogic, #fwStrategy {
+	width: 250px;
+}

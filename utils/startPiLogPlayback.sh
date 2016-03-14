@@ -5,8 +5,8 @@
 # the overkill way of stopping all this is "killall sh"
 # take care not to cause "collateral damage"
 
-SOURCEDIR="/home/theuers/public_html/emulation_results/best-routeMediumBWLowCon_SVCRateBasedAdaptationLogic/run_0/"
-TARGETDIR="/home/theuers/public_html/netvis/network/" 
+SOURCEDIR=$1
+TARGETDIR=$2
 PICOUNT=20
 
 # start playback

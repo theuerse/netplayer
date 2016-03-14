@@ -31,6 +31,24 @@
 		<p class="leftspaced">Reading realtime-log ...</p>
 	</div>
 	<div id="legendContainer"></div>
-    <div id="graphContainer"></div>
+  <div id="graphContainer"></div>
+	<div id="playbackStartDialog" title="Start - preparations">
+		<fieldset>
+				<label id="aLogicLabel" for="aLogic">Adaption-logic</label>
+				<select name"aLogic" id="aLogic">
+					<option selected="selected" value="rate">rate-based</option>
+					<option value="buffer">buffer-based</option>
+				</select>
+
+				<label id="fwStrategyLabel" for="fwStrategy">Forwarding-strategy</label>
+				<select name="fwStrategy" id="fwStrategy">
+					<option value="best-route">best-route</option>
+					<option value="broadcast">broadcast</option>
+					<option value="ncc">ncc</option>
+					<option value="omccrf">omccrf</option>
+					<option value="saf">saf</option>
+				</select>
+		</fieldset>
+	</div>
 </body>
 </html>
