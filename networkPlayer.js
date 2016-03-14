@@ -29,6 +29,7 @@
  var edgeTraffic = {};
  var nodeCoolTipTimeout = {};
  var edgeCoolTipTimeout = {};
+ var playbackStateCheckInterval = {};
  var edgeInformation = {};
  var mode = {traffic: false, rtlog: false}; // delineates the current mode of operation
  var mousePosition = {x: 0, y: 0};
@@ -98,6 +99,17 @@
       .fail(function() {
             console.log("Failed to retrieve Topology-File (path correct?)");
       });
+
+      // update playback-button with current state of playback
+      playbackStateCheckInterval = setInterval(function(){
+        $.post("utils/isRunning.php").done(function(data){
+					if(data === "1"){
+            $('#playbackBtn').button("option","label","stop playback");
+          }else if(data === "0"){
+            $('#playbackBtn').button("option","label","start playback");
+          }
+				});
+      }, updateInterval);
 });
 
 
@@ -442,9 +454,14 @@ function drawLegend(network,options,numberOfNodes,servers,groups,bitrateBounds){
 
     // add a button responsible to create/ let download the topology-file of the current network
     // or show a error-dialog if the network is not connected (there exist isolated nodes)
-    $('#legendList').append('<li class="list-group-item"><button id="startBtn">start playback</button></li>');
-    $('#startBtn').button().click(function(event){
-      showPlaybackStartDialog();
+    $('#legendList').append('<li class="list-group-item"><button id="playbackBtn">start playback</button></li>');
+    $('#playbackBtn').button().click(function(event){
+      if($(this).button("option","label") === "start playback"){
+          showPlaybackStartDialog();
+      }else{
+          stopPlayback();
+          $(this).button("option","label","start playback");
+      }
     });
 
 	  // get params
@@ -1121,6 +1138,7 @@ function showPlaybackStartDialog(){
             console.log("encountered error(s):");
 						console.log(data);
           }
+          $('#playbackBtn').button("option","label","stop playback");
 				});
 				$(this).dialog("close");
 			},
@@ -1131,6 +1149,11 @@ function showPlaybackStartDialog(){
 	});
 }
 
+function stopPlayback(){
+  $.post("utils/stop.php").done(function(data){
+    console.log("stopped playback");
+  });
+}
 
 //
 // Utility Methods

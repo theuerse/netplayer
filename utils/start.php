@@ -4,7 +4,6 @@ define("RECORDINGDIR","../recordings/");
 //echo $_POST["fwStrategy"];
 
 $TARGETDIR = realpath("../network") . "/";
-echo getcwd() . "\n";
 
 // Determine source-directory, for now, aLogic only
 $SOURCEDIR = realpath(RECORDINGDIR . $_POST["aLogic"]) . "/";
