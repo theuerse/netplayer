@@ -101,16 +101,19 @@
       });
 
       // update playback-button with current state of playback
-      playbackStateCheckInterval = setInterval(function(){
-        $.post("utils/isRunning.php").done(function(data){
-					if(data === "1"){
-            $('#playbackBtn').button("option","label","stop playback");
-          }else if(data === "0"){
-            $('#playbackBtn').button("option","label","start playback");
-          }
-				});
-      }, updateInterval);
+      updatePlaybackState();
+      playbackStateCheckInterval = setInterval(function(){updatePlaybackState();}, updateInterval);
 });
+
+function updatePlaybackState(){
+  $.post("utils/isRunning.php").done(function(data){
+    if(data === "1"){
+      $('#playbackBtn').button("option","label","stop playback");
+    }else if(data === "0"){
+      $('#playbackBtn').button("option","label","start playback");
+    }
+  });
+}
 
 
 // transitions the datatructures and behavior of the program
