@@ -106,13 +106,21 @@
 });
 
 function updatePlaybackState(){
+
   $.post("utils/isRunning.php").done(function(data){
     if(data === "1"){
-      $('#playbackBtn').button("option","label","stop playback");
+      updatePlaybackBtn('stop');
     }else if(data === "0"){
-      $('#playbackBtn').button("option","label","start playback");
+      updatePlaybackBtn('start');
     }
   });
+}
+
+function updatePlaybackBtn(newState){
+  $('#playbackBtn').removeClass('start');
+  $('#playbackBtn').removeClass('stop');
+  $('#playbackBtn').addClass(newState);
+  $('#playbackBtn').button("option","label",newState + " playback");
 }
 
 
@@ -463,7 +471,7 @@ function drawLegend(network,options,numberOfNodes,servers,groups,bitrateBounds){
           showPlaybackStartDialog();
       }else{
           stopPlayback();
-          $(this).button("option","label","start playback");
+          updatePlaybackBtn('start');
       }
     });
 
@@ -1140,8 +1148,9 @@ function showPlaybackStartDialog(){
 					if(data !== ""){
             console.log("encountered error(s):");
 						console.log(data);
+          }else {
+            updatePlaybackBtn('stop');
           }
-          $('#playbackBtn').button("option","label","stop playback");
 				});
 				$(this).dialog("close");
 			},
