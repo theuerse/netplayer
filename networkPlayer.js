@@ -1,5 +1,6 @@
  var topologyFilePath = "network/generated_network_top.txt";
  var jsonDirectory = "network/";
+ var pageTitle = "Network Layout";
 
  var layers = { //id
                 none: {symbol: "", screenFillColor: "#1b1b43", screenFontColor: "#FFFFFF",
@@ -46,6 +47,7 @@
  var network;
  var svcLayerChart;
  var highlightActive = false;
+ var playbackRunning = false;
  	// colors of BYR color wheel, order changed
 	var colors = ["#0247fe","#8601af","#66b032","#fe2712","#fefe33","#fb9902",
 		      "#0392ce","#3d01a4","#d0ea2b","#a7194b","#fabc02"];
@@ -101,19 +103,24 @@
       });
 
       // update playback-button with current state of playback
-      updatePlaybackState();
-      playbackStateCheckInterval = setInterval(function(){updatePlaybackState();}, updateInterval);
+      $.post("utils/isRunning.php").done(function(data){updatePlaybackState(data === "1");});
+      playbackStateCheckInterval = setInterval(
+        function(){
+          $.post("utils/isRunning.php").done(function(data){updatePlaybackState(data === "1");});
+        }, updateInterval);
 });
 
-function updatePlaybackState(){
-
-  $.post("utils/isRunning.php").done(function(data){
-    if(data === "1"){
-      updatePlaybackBtn('stop');
-    }else if(data === "0"){
-      updatePlaybackBtn('start');
-    }
-  });
+function updatePlaybackState(shouldRun){
+  if(!playbackRunning && shouldRun){
+    updatePlaybackBtn('stop');
+    $.getJSON(jsonDirectory +"settings.json", function(data){
+      $(document).prop('title', pageTitle + " -> " + data.aLogic + " , " + data.fwStrategy);
+    });
+  }else if(playbackRunning && !shouldRun){
+    updatePlaybackBtn('start');
+    $(document).prop('title', pageTitle);
+  }
+  playbackRunning = shouldRun;
 }
 
 function updatePlaybackBtn(newState){
@@ -471,9 +478,10 @@ function drawLegend(network,options,numberOfNodes,servers,groups,bitrateBounds){
           showPlaybackStartDialog();
       }else{
           stopPlayback();
-          updatePlaybackBtn('start');
+          updatePlaybackState(false);
       }
     });
+    updatePlaybackBtn('start'); // initialize button
 
 	  // get params
 	   var seed = getUrlVar("seed");
@@ -1149,7 +1157,7 @@ function showPlaybackStartDialog(){
             console.log("encountered error(s):");
 						console.log(data);
           }else {
-            updatePlaybackBtn('stop');
+            updatePlaybackState(true);
           }
 				});
 				$(this).dialog("close");
