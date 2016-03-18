@@ -5,16 +5,11 @@ define("RECORDINGDIR","../recordings/");
 
 $TARGETDIR = realpath("../network") . "/";
 
-// Determine source-directory, for now, aLogic only
-$SOURCEDIR = realpath(RECORDINGDIR . $_POST["aLogic"]) . "/";
+// Determine source-directory as combination of chosen aLogic and fwStrategy
+$SOURCEDIR = realpath(RECORDINGDIR . $_POST['aLogic'] . "_" . $_POST['fwStrategy']) . "/";
+echo $SOURCEDIR;
 if(!is_dir($SOURCEDIR)) {exit($SOURCEDIR . " : no such directory");}
 
-
-//
-// (Re-)start playback
-//
-// Stop the playback
-exec("/bin/bash stop.sh");
 
 //
 // Start the playback
