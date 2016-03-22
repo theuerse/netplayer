@@ -745,16 +745,22 @@ function updateSVCLayerChart(){
         }]
 	};
 
-	var ctx = document.getElementById("chart-area");
-  // destroy old chart
-  if(svcLayerChart !== undefined) svcLayerChart.destroy();
-  // create new/updated version
-  svcLayerChart = new Chart(ctx,{
-		type:'doughnut',
-		data: data
-	});
 
-	svcLayerChart.resize();
+  // update chart if it already exists
+  if(svcLayerChart !== undefined){
+    svcLayerChart.config.data.datasets = data.datasets;
+    svcLayerChart.config.data.labels = data.labels;
+    svcLayerChart.update();
+  }else{
+    // create chart
+    var ctx = document.getElementById("chart-area");
+
+    svcLayerChart = new Chart(ctx,{
+      type:'doughnut',
+      data: data
+    });
+  }
+  svcLayerChart.resize();
 }
 
 
